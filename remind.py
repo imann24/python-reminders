@@ -1,5 +1,4 @@
 import os
-import subprocess
 import re
 
 file_name = "reminders.txt"
