@@ -8,12 +8,6 @@ quit_regex = re.compile("quit|q")
 create_regex = re.compile("c.*|create.*")
 print_regex = re.compile("print|p")
 
-def get_file(file_name):
-    file_path = os.getcwd() + "/" + file_name
-    if not os.path.isfile(file_path):
-        subprocess.call(["touch", file_path])
-    return open(file_path, "a+")
-
 def create_reminder(reminder_file, user_input):
     split_input = user_input.split(" ")
     if len(split_input) > 1:
@@ -36,7 +30,7 @@ def print_reminders(reminder_file):
     print ""
 
 def main():
-    reminder_file = get_file(file_name)
+    reminder_file = open(file_name, "a+")
     user_input = raw_input("Welcome to Reminders. " + prompt_message)
     while not(quit_regex.match(user_input) and quit_regex.match(user_input).group(0) == user_input):
         if create_regex.match(user_input):
