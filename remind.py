@@ -4,7 +4,9 @@ import re
 
 file_name = "reminders.txt"
 prompt_message = "What can I do for you? create(c), print(p), quit(q):\n"
-create_reminder_regex = re.compile("c.*|create.*")
+quit_regex = re.compile("quit|q")
+create_regex = re.compile("c.*|create.*")
+print_regex = re.compile("print|p")
 
 def get_file(file_name):
     file_path = os.getcwd() + "/" + file_name
@@ -36,10 +38,10 @@ def print_reminders(reminder_file):
 def main():
     reminder_file = get_file(file_name)
     user_input = raw_input("Welcome to Reminders. " + prompt_message)
-    while user_input != "quit" and user_input != "q":
-        if create_reminder_regex.match(user_input):
+    while not(quit_regex.match(user_input) and quit_regex.match(user_input).group(0) == user_input):
+        if create_regex.match(user_input):
             create_reminder(reminder_file, user_input)
-        elif user_input == "print" or user_input == "p":
+        elif print_regex.match(user_input) and print_regex.match(user_input).group(0) == user_input:
             print_reminders(reminder_file)
         user_input = raw_input(prompt_message)
     reminder_file.close()
