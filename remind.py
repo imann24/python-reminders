@@ -29,15 +29,20 @@ def print_reminders(reminder_file):
     print ""
 
 def main():
-    reminder_file = open(file_name, "a+")
-    user_input = raw_input("Welcome to Reminders. " + prompt_message)
-    while not(quit_regex.match(user_input) and quit_regex.match(user_input).group(0) == user_input):
-        if create_regex.match(user_input):
-            create_reminder(reminder_file, user_input)
-        elif print_regex.match(user_input) and print_regex.match(user_input).group(0) == user_input:
-            print_reminders(reminder_file)
-        user_input = raw_input(prompt_message)
-    reminder_file.close()
-    exit(0)
+    try:
+        reminder_file = open(file_name, "a+")
+        user_input = raw_input("Welcome to Reminders. " + prompt_message)
+        while not(quit_regex.match(user_input) and quit_regex.match(user_input).group(0) == user_input):
+            if create_regex.match(user_input):
+                create_reminder(reminder_file, user_input)
+            elif print_regex.match(user_input) and print_regex.match(user_input).group(0) == user_input:
+                print_reminders(reminder_file)
+            user_input = raw_input(prompt_message)
+    except KeyboardInterrupt:
+        print ""
+    finally:
+        print "Goodbye!"
+        reminder_file.close()
+        exit(0)
 
 main()
